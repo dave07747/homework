@@ -37,6 +37,8 @@ list_t* list_new();
 // imprecise. Check out the "valgrind" tool for an example.)
 void list_delete(list_t* list);
 
+int list_length(list_t* list);
+
 // Insert the specified data at the end of the list. Returns the newly added
 // node.
 node_t* list_add_item(list_t* list, void* data);

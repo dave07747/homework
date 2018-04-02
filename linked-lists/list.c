@@ -57,6 +57,17 @@ node_t* list_get(list_t* list, size_t i) {
 	return current;
 }
 
+int list_length(list_t* list) {
+	node_t* current = list->first_node;
+	int count = 0;
+
+	while (current != NULL) {
+		count++;
+		current = current->next;
+	}
+	return count;
+}
+
 
 void list_print_contents(list_t* list) {
 	node_t* current = list->first_node;
@@ -143,6 +154,9 @@ int main() {
   printf("\nHere's the same list backwards:\n");
   list_reverse(list);
   list_print_contents(list);
+
+  printf("\nHere's how long the list is:\n");
+  printf("%d\n", list_length(list));
 
   // I encourage you to mess with this data structure a little bit. Try some
   // weird inputs. Try inserting elements in an infinite loop and see what
