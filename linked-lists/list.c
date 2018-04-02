@@ -3,20 +3,31 @@
 list_t* list_new() {
 	node_t* head = NULL;	
 	head = malloc(sizeof(node_t));
+	memset(head,NULL,sizeof(node_t));
 	if (head == NULL)
 		return 1;
 	head->data = NULL;
+	/*
 	head->next = malloc(sizeof(node_t));
 	head->next->data = NULL;
 	head->next->next = NULL;
+	*/
 }
 
 void list_delete(list_t* list) {
+	node_t* current = list->first_node;
+	while (list->first_node->next != NULL) {
+		current = list->first_node;
+		list->first_node = list->first_node->next;
+		free(current);
+	}
+	free(list->first_node);
 	free(list);
 }
 
 node_t* list_add_item(list_t* list, void* data) {
 	node_t* new_node = malloc(sizeof(node_t));
+	memset(new_node,NULL,sizeof(node_t));
 	new_node->data = data;
 	new_node->next = NULL;
 	if (list->first_node == NULL) {
@@ -80,6 +91,7 @@ void list_reverse(list_t* list) {
 
 int main() {
   list_t* list = list_new();
+  list_print_contents(list);
   
   char* one = "one";
   char* two = "two";
