@@ -1,12 +1,16 @@
 #include "list.h"
 
 list_t* list_new() {
-	node_t* head = NULL;	
-	head = malloc(sizeof(node_t));
-	if (head == NULL)
+	node_t* node = NULL;	
+	node = malloc(sizeof(node_t));
+	if (node == NULL)
 		return (list_t *)1;
-	head->data = NULL;
-	return (list_t *)head;
+	node->data = NULL;
+	node->next = NULL;
+	list_t* initial_list = malloc(sizeof(list_t));
+	initial_list->last_node = node;
+	initial_list->first_node = node;
+	return initial_list;
 }
 
 void list_delete(list_t* list) {
@@ -26,11 +30,11 @@ node_t* list_add_item(list_t* list, void* data) {
 		return (node_t *)1;
 	new_node->data = data;
 	new_node->next = NULL;
-	if (list->first_node == NULL) {
+	if (list->first_node->next == NULL ) {
 		list->last_node = new_node;
 		list->first_node = new_node;
-		list->first_node->next = list->last_node;
 		list->last_node->next = NULL;
+		list->first_node->next = list->last_node;
 	}
 	else {
 		list->last_node->next = new_node;
@@ -108,7 +112,6 @@ void list_reverse(list_t* list) {
 
 int main() {
   list_t* list = list_new();
-  list_t* list2 = list_new();
   
   char* one = "one";
   char* two = "two";
@@ -116,16 +119,11 @@ int main() {
   char* four = "four";
   char* five = "five";
 
-  list_add_item(list2, one);
-  list_add_item(list2, NULL);
-  list_add_item(list2, three);
-  list_add_item(list2, four);
-  list_add_item(list2, 0);
 
   list_add_item(list, one);
   list_add_item(list, two);
   list_add_item(list, three);
-  list_add_item(list, list2); //This doesn't work
+  list_add_item(list, four); //This doesn't work
   list_add_item(list, five);
 
 
